@@ -1,0 +1,7 @@
+src
+node_modules
+dump.txt
+.vscode
+.si
+.env
+env

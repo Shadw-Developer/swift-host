@@ -1,0 +1,49 @@
+<div class="space-y-6">
+  <h1 class="text-3xl font-bold text-white">Analytics</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Top Paths -->
+    <div class="glass rounded-xl p-6">
+      <h3 class="text-lg font-semibold mb-4">Top Endpoints</h3>
+      <div class="space-y-3">
+        <% topPaths.forEach(([path, count], idx) => { %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-slate-500 w-6">#<%= idx + 1 %></span>
+              <span class="text-slate-300 truncate max-w-xs font-mono text-sm"><%= path %></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-32 bg-slate-700 rounded-full h-2">
+                <div class="bg-indigo-500 h-2 rounded-full" style="width: <%= (count / topPaths[0][1] * 100) %>%"></div>
+              </div>
+              <span class="text-sm text-slate-400"><%= count %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Unique Visitors -->
+    <div class="glass rounded-xl p-6">
+      <h3 class="text-lg font-semibold mb-4">Visitantes Únicos</h3>
+      <div class="text-center py-8">
+        <p class="text-5xl font-bold gradient-text"><%= uniqueIps %></p>
+        <p class="text-slate-400 mt-2">IPs diferentes detectados</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="glass rounded-xl p-6">
+    <h3 class="text-lg font-semibold mb-4">Tráfego por Hora</h3>
+    <div class="h-64 flex items-end gap-2">
+      <% hourlyData.forEach(([hour, count]) => { %>
+        <div class="flex-1 flex flex-col items-center gap-2">
+          <div class="w-full bg-indigo-500/30 rounded-t hover:bg-indigo-500/50 transition" 
+               style="height: <%= Math.max(10, count * 2) %>px"></div>
+          <span class="text-xs text-slate-500 rotate-45 origin-left"><%= hour.split('T')[1] || hour %>h</span>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>

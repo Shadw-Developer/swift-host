@@ -1,0 +1,184 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-3xl font-bold text-white">Dashboard</h1>
+      <p class="text-slate-400 mt-1">Gerencie seus tunnels e monitore tráfego em tempo real</p>
+    </div>
+    <button onclick="createTunnel()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition">
+      <i data-lucide="plus" class="w-4 h-4"></i> Novo Tunnel
+    </button>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="glass rounded-xl p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-slate-400 text-sm">Tunnels Ativos</p>
+          <p class="text-2xl font-bold text-white mt-1" id="active-count"><%= tunnels.filter(t => t.status === 'active').length %></p>
+        </div>
+        <div class="bg-green-500/20 p-3 rounded-lg">
+          <i data-lucide="activity" class="w-6 h-6 text-green-400"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass rounded-xl p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-slate-400 text-sm">Total Requests</p>
+          <p class="text-2xl font-bold text-white mt-1" id="req-count">0</p>
+        </div>
+        <div class="bg-blue-500/20 p-3 rounded-lg">
+          <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass rounded-xl p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-slate-400 text-sm">Arquivos de Log</p>
+          <p class="text-2xl font-bold text-white mt-1"><%= stats.totalFiles %></p>
+        </div>
+        <div class="bg-purple-500/20 p-3 rounded-lg">
+          <i data-lucide="database" class="w-6 h-6 text-purple-400"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass rounded-xl p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-slate-400 text-sm">Storage Usado</p>
+          <p class="text-2xl font-bold text-white mt-1"><%= formatBytes(stats.totalSize) %></p>
+        </div>
+        <div class="bg-orange-500/20 p-3 rounded-lg">
+          <i data-lucide="hard-drive" class="w-6 h-6 text-orange-400"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tunnels Ativos -->
+  <div class="glass rounded-xl p-6">
+    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+      <i data-lucide="server" class="w-5 h-5 text-indigo-400"></i>
+      Tunnels Ativos
+    </h2>
+    
+    <% if (tunnels.length === 0) { %>
+      <div class="text-center py-12 text-slate-500">
+        <i data-lucide="wind" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
+        <p>Nenhum tunnel ativo. Crie um novo para começar.</p>
+      </div>
+    <% } else { %>
+      <div class="grid gap-4" id="tunnels-list">
+        <% tunnels.forEach(tunnel => { %>
+          <div class="tunnel-card glass rounded-lg p-4 flex items-center justify-between" data-id="<%= tunnel.id %>">
+            <div class="flex items-center gap-4">
+              <div class="bg-green-500/20 p-2 rounded-lg">
+                <i data-lucide="link" class="w-5 h-5 text-green-400"></i>
+              </div>
+              <div>
+                <p class="font-medium text-white"><%= tunnel.publicUrl %></p>
+                <p class="text-sm text-slate-400">→ <%= tunnel.localUrl %></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <p class="text-sm text-slate-400"><%= tunnel.metrics?.totalRequests || 0 %> requests</p>
+                <p class="text-xs text-slate-500"><%= tunnel.metrics?.uniqueIps || 0 %> IPs únicos</p>
+              </div>
+              <button onclick="stopTunnel('<%= tunnel.id %>')" class="text-red-400 hover:text-red-300 p-2">
+                <i data-lucide="square" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Logs Recentes -->
+  <div class="glass rounded-xl p-6">
+    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+      <i data-lucide="clock" class="w-5 h-5 text-indigo-400"></i>
+      Requisições Recentes
+    </h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="text-slate-400 border-b border-slate-700">
+          <tr>
+            <th class="pb-3">Timestamp</th>
+            <th class="pb-3">IP</th>
+            <th class="pb-3">Método</th>
+            <th class="pb-3">Path</th>
+            <th class="pb-3">Status</th>
+            <th class="pb-3">Tempo</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700">
+          <% recentLogs.forEach(log => { %>
+            <tr class="hover:bg-slate-800/50">
+              <td class="py-3 text-slate-300"><%= new Date(log.timestamp).toLocaleTimeString() %></td>
+              <td class="py-3 font-mono text-xs text-slate-400"><%= log.ip %></td>
+              <td class="py-3">
+                <span class="px-2 py-1 rounded text-xs font-medium bg-blue-500/20 text-blue-300">
+                  <%= log.method %>
+                </span>
+              </td>
+              <td class="py-3 text-slate-300 truncate max-w-xs"><%= log.path %></td>
+              <td class="py-3">
+                <span class="px-2 py-1 rounded text-xs font-medium <%= log.responseStatus === 200 ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300' %>">
+                  <%= log.responseStatus || '-' %>
+                </span>
+              </td>
+              <td class="py-3 text-slate-400"><%= log.responseTime %>ms</td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const ws = new WebSocket(`ws://${window.location.host}`);
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  if (data.type === 'stats') {
+    updateStats(data.data);
+  }
+};
+
+function updateStats(stats) {
+  document.getElementById('active-count').textContent = stats.tunnels.filter(t => t.status === 'active').length;
+  document.getElementById('req-count').textContent = stats.tunnels.reduce((acc, t) => acc + (t.metrics?.totalRequests || 0), 0);
+}
+
+async function createTunnel() {
+  const target = prompt('URL do servidor local (ex: http://localhost:3000):', 'http://localhost:3000');
+  if (!target) return;
+  
+  const res = await fetch('/api/tunnels', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ targetUrl: target })
+  });
+  
+  if (res.ok) {
+    location.reload();
+  } else {
+    alert('Erro ao criar tunnel');
+  }
+}
+
+async function stopTunnel(id) {
+  if (!confirm('Parar este tunnel?')) return;
+  await fetch(`/api/tunnels/${id}`, { method: 'DELETE' });
+  location.reload();
+}
+</script>
