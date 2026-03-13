@@ -161,7 +161,7 @@ Contribuições tornam a comunidade open source um lugar incrível!
  * Abra um Pull Request.
    
 ## 📄 Licença
-Este projeto está licenciado sob a licença ISC. Consulte o arquivo LICENSE para mais detalhes.
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](https://github.com/Shadw-Developer/swifthost/edit/main/LICENSE) para mais detalhes.
 
 <p align="center">
   Feito com ❤️ por <a href="https://github.com/Shadw-Developer">Alisson</a>.
