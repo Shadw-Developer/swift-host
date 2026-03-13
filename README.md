@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh3toHrnfEVmW_gDU9kJS8lRTg7kL8LOiLIEpknKGBPA&s=10" alt="SwiftHost Logo" width="200" />
+  <img src="docs/assets/logo.png" alt="SwiftHost Logo" width="200" />
 </p>
 
 <p align="center">
