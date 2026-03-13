@@ -7,10 +7,10 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/swifthost"><img src="https://img.shields.io/npm/v/swifthost.svg" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/swifthost"><img src="https://img.shields.io/npm/dm/swifthost.svg" alt="npm downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-ISC-blue.svg" alt="license"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/swifthost.svg" alt="node version"></a>
+  <img src="https://img.shields.io/badge/version-1.2.0-blue.svg" alt="version">
+  <img src="https://img.shields.io/badge/downloads-coming_soon-lightgrey.svg" alt="downloads">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license">
+  <img src="https://img.shields.io/badge/node-v24.13.0-green.svg" alt="node version">
 </p>
 
 <p align="center">
@@ -91,7 +91,7 @@ Acesse http://localhost:7777 para visualizar:
  * Logs detalhados com filtros de busca.
 
 <p align="center">
-  <img src="https://via.placeholder.com/800x400/1e293b/ffffff?text=Dashboard+Preview" alt="Dashboard preview" width="80%" />
+  <img src="docs/assets/dashboard-preview.png" alt="Dashboard preview" width="80%" />
 </p>
 
 ## 🧪 Exemplos de Uso
