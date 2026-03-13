@@ -5,7 +5,7 @@ Todas as alterações notáveis no SwiftHost serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com),
 e este projeto segue o [Semantic Versioning](https://semver.org).
 
-## [ 1.3.0 ] - 2024-03-12
+## [ 1.2.0 ] - 2024-03-12
 
 ### Adicionado
 - Dashboard web com métricas em tempo real (flag `--gui`)
