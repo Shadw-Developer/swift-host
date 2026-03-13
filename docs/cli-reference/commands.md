@@ -9,7 +9,7 @@ swf [comando] [opções] [argumentos]
 
 # Visão Geral dos Comandos
 
-```mermaind
+```mermaid
 graph TD
     root((swf CLI)) --> swf[swf]
     root --> gui[gui]
@@ -17,9 +17,9 @@ graph TD
     root --> doctor[doctor]
     root --> logs[logs]
 
-    swf --> swf_opt[https://xilinx.github.io/Alveo-Cards/master/debugging/build/html/docs/common-steps.html](https://xilinx.github.io/Alveo-Cards/master/debugging/build/html/docs/common-steps.html)
+    swf --> swf_opt[https://xilinx.github.io/Alveo-Cards/master/debugging/build/html/docs/common-steps.html]
     gui --> gui_opt[--port]
-    dev --> dev_opt[https://help.aloft.ai/en/articles/9150748-uploading-flight-logs-manually](https://help.aloft.ai/en/articles/9150748-uploading-flight-logs-manually)
+    dev --> dev_opt[https://help.aloft.ai/en/articles/9150748-uploading-flight-logs-manually]
     logs --> logs_opt[--lines, --ip, --path]
 ```
 
